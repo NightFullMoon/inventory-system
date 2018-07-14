@@ -1,4 +1,3 @@
-[
     {
         "id": "1",
         "name": "血瓶",
@@ -10,4 +9,3 @@
         "sellPrice": "5",
         "sprite": "Sprites/Items/hp",
     }
-]

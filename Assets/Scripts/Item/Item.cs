@@ -64,6 +64,10 @@ public class Item
 
     public string sprite;
 
+    public Item() {
+        this.id = -1;
+    }
+
 
     public Item(int id, string name, ItemType itemType, Quality quality, string description, int maxNum, int buyPrice, int sellPrice,string sprite)
     {
