@@ -303,6 +303,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Inventory.cs" />
+    <Compile Include="Assets\Knapsack.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Item\Consumable.cs" />
     <Compile Include="Assets\Scripts\Item\Equipment.cs" />

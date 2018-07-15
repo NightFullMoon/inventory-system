@@ -754,6 +754,7 @@ GameObject:
   - component: {fileID: 320723745}
   - component: {fileID: 320723747}
   - component: {fileID: 320723746}
+  - component: {fileID: 320723748}
   m_Layer: 5
   m_Name: KnapsackPanel
   m_TagString: Untagged
@@ -814,6 +815,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 320723744}
+--- !u!114 &320723748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 320723744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12650f6f5d573040a2f874684a75d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &533198732
 Prefab:
   m_ObjectHideFlags: 0

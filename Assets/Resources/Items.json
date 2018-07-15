@@ -1,13 +1,16 @@
-[
+{"consumable":[
     {
         "id": 1,
         "name": "血瓶",
         "itemType": 2,
-        "quality": 2,
+        "quality": "Common",
         "description": "用来恢复少量HP",
         "maxNum": 99,
         "buyPrice": 10,
         "sellPrice": 5,
-        "sprite": "/Sprites/Items/hp"
+        "sprite": "Sprites/Items/hp",
+		"hp":100,
+		"mp":0
     }
 	]
+	}
