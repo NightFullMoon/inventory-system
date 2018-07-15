@@ -12,11 +12,15 @@ public class Inventory : MonoBehaviour
     {
         slots = GetComponentsInChildren<Slot>();
 
-        storeItem(1);
+        //storeItem(1);
 
-        storeItem(2,12);
+        //storeItem(2,12);
 
-        storeItem(3);
+        //storeItem(3);
+
+        for (int i = 1; i< 19; ++i) {
+            storeItem(i);
+        }
     }
 
     // 存放入指定id的物品，如果存放失败，则返回false

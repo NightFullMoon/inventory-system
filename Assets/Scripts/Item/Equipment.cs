@@ -9,9 +9,8 @@ public enum EquipmentType
     Neck,
     Ring,
     Leg,
-    Barcer,
+    Bracer,
     Boots,
-    Trinket,
     Shoulder,
     Belt,
     OffHand

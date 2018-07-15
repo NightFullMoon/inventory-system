@@ -16,7 +16,6 @@ public class Consumable : Item
     {
         this.hp = hp;
         this.mp = mp;
-
     }
 
     public Consumable(Item item, int hp, int mp) : base(item)

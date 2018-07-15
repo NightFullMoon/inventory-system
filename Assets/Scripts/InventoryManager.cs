@@ -105,13 +105,19 @@ public class InventoryManager : MonoBehaviour
                        (int)item["intellect"],
                        (int)item["agility"],
                        (int)item["stamina"],
-                       (EquipmentType)System.Enum.Parse(typeof(EquipmentType),(string)item["equipmentType"])
+                       (EquipmentType)System.Enum.Parse(typeof(EquipmentType), (string)item["equipmentType"])
                        ));
 
                     break;
                 case ItemType.Weapon:
+
+                    itemList.Add(new Weapon(baseItem,
+                        (int)item["damage"],
+                        (WeaponType)System.Enum.Parse(typeof(WeaponType), (string)item["weaponType"])
+                        ));
                     break;
                 case ItemType.Material:
+                    itemList.Add(new Material(baseItem));
                     break;
                 default:
                     break;

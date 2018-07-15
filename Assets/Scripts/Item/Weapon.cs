@@ -30,4 +30,12 @@ public class Weapon : Item
         this.damage = damage;
         this.weaponType = weaponType;
     }
+
+    public Weapon(Item item,
+                   int damage,
+            WeaponType weaponType) : base(item)
+    {
+        this.damage = damage;
+        this.weaponType = weaponType;
+    }
 }

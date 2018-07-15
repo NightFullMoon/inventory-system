@@ -17,4 +17,9 @@ public class Material : Item
     {
             
     }
+
+    public Material(Item item):base(item) {
+
+    }
+
 }
