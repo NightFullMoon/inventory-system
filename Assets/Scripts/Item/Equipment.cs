@@ -5,6 +5,7 @@ using UnityEngine;
 public enum EquipmentType
 {
     Head,
+    Chest,
     Neck,
     Ring,
     Leg,
@@ -53,6 +54,18 @@ public class Equipment : Item
         this.equipmentType = equipmentType;
     }
 
-
+    public Equipment(Item item,
+                     int strength,
+                     int intellect,
+                     int agility,
+                     int stamina,
+           EquipmentType equipmentType) : base(item)
+    {
+        this.strength = strength;
+        this.intellect = intellect;
+        this.agility = agility;
+        this.stamina = stamina;
+        this.equipmentType = equipmentType;
+    }
 
 }

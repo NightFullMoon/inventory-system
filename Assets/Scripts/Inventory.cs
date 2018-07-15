@@ -14,7 +14,9 @@ public class Inventory : MonoBehaviour
 
         storeItem(1);
 
-        storeItem(1,12);
+        storeItem(2,12);
+
+        storeItem(3);
     }
 
     // 存放入指定id的物品，如果存放失败，则返回false

@@ -64,12 +64,13 @@ public class Item
 
     public string sprite;
 
-    public Item() {
+    public Item()
+    {
         this.id = -1;
     }
 
 
-    public Item(int id, string name, ItemType itemType, Quality quality, string description, int maxNum, int buyPrice, int sellPrice,string sprite)
+    public Item(int id, string name, ItemType itemType, Quality quality, string description, int maxNum, int buyPrice, int sellPrice, string sprite)
     {
         this.id = id;
 
@@ -92,8 +93,22 @@ public class Item
 
     }
 
+    public Item(Item item)
+    {
+        this.id = item.id;
+        this.name = item.name;
+        this.itemType = item.itemType;
+        this.quality = item.quality;
+        this.description = item.description;
+        this.maxNum = item.maxNum;
+        this.buyPrice = item.buyPrice;
+        this.sellPrice = item.sellPrice;
+        this.sprite = item.sprite;
+    }
+
     // 获取显示在面板上的信息
-    public virtual string GetTooltipText() {
+    public virtual string GetTooltipText()
+    {
         return name;
     }
 

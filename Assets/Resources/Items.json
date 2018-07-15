@@ -1,16 +1,44 @@
-{"consumable":[
+[
     {
         "id": 1,
-        "name": "血瓶",
-        "itemType": 2,
+        "name": "红瓶",
+        "itemType": "Consumable",
         "quality": "Common",
         "description": "用来恢复少量HP",
         "maxNum": 99,
         "buyPrice": 10,
         "sellPrice": 5,
         "sprite": "Sprites/Items/hp",
-		"hp":100,
-		"mp":0
+        "hp": 100,
+        "mp": 0
+    },
+    {
+        "id": 2,
+        "name": "蓝瓶",
+        "itemType": "Consumable",
+        "quality": "Common",
+        "description": "用来恢复少量HP",
+        "maxNum": 99,
+        "buyPrice": 10,
+        "sellPrice": 5,
+        "sprite": "Sprites/Items/mp",
+        "hp": 0,
+        "mp": 100
+    },
+    {
+        "id": 3,
+        "name": "胸甲",
+        "itemType": "Equipment",
+        "quality": "Common",
+        "description": "长得很普通的胸甲",
+        "maxNum": 1,
+        "buyPrice": 100,
+        "sellPrice": 20,
+        "sprite": "Sprites/Items/armor",
+        "strength": 1,
+        "intellect": 2,
+        "agility": 3,
+        "stamina": 4,
+        "equipmentType":"Chest"
     }
-	]
-	}
+]

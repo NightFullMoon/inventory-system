@@ -75,12 +75,11 @@ public class InventoryManager : MonoBehaviour
         JsonData demo = JsonMapper.ToObject(text);
         //Debug.Log(demo["consumable"][0]["name"]);
 
-        Debug.Log((demo["consumable"].Count));
-        for (int index = 0, count = demo["consumable"].Count; index < count; ++index)
+        //Debug.Log((demo["consumable"].Count));
+        for (int index = 0, count = demo.Count; index < count; ++index)
         {
-            Debug.Log(index);
-            JsonData item = demo["consumable"][index];
-            itemList.Add(new Consumable((int)item["id"],
+            JsonData item = demo[index];
+            Item baseItem = new Item((int)item["id"],
                 (string)item["name"],
                 ItemType.Consumable,
                 (Quality)System.Enum.Parse(typeof(Quality), (string)item["quality"]),
@@ -88,12 +87,44 @@ public class InventoryManager : MonoBehaviour
                 (int)item["maxNum"],
                 (int)item["buyPrice"],
                 (int)item["sellPrice"],
-                (string)item["sprite"],
-                (int)item["hp"],
-                (int)item["mp"]));
+                (string)item["sprite"]);
+
+            ItemType type = (ItemType)System.Enum.Parse(typeof(ItemType), (string)item["itemType"]);
+            switch (type)
+            {
+                case ItemType.Consumable:
+                    itemList.Add(new Consumable(
+                        baseItem,
+                        (int)item["hp"],
+                        (int)item["mp"]));
+                    break;
+                case ItemType.Equipment:
+                    itemList.Add(new Equipment(
+                       baseItem,
+                       (int)item["strength"],
+                       (int)item["intellect"],
+                       (int)item["agility"],
+                       (int)item["stamina"],
+                       (EquipmentType)System.Enum.Parse(typeof(EquipmentType),(string)item["equipmentType"])
+                       ));
+
+                    break;
+                case ItemType.Weapon:
+                    break;
+                case ItemType.Material:
+                    break;
+                default:
+                    break;
+            }
+
+
+            //Debug.Log(index);  
+
+
+
         }
         Debug.Log(itemList.Count);
-        
+
     }
 
     //根据id去查找对应的item对象，如果该对象不存在，则返回null;

@@ -19,4 +19,10 @@ public class Consumable : Item
 
     }
 
+    public Consumable(Item item, int hp, int mp) : base(item)
+    {
+        this.hp = hp;
+        this.mp = mp;
+    }
+
 }
