@@ -109,7 +109,39 @@ public class Item
     // 获取显示在面板上的信息
     public virtual string GetTooltipText()
     {
-        return name;
+        string color = "white";
+
+        switch (quality)
+        {
+            case Quality.Common:
+                break;
+            case Quality.Uncommon:
+                color = "lime";
+                break;
+            case Quality.Rare:
+                color = "navy";
+                break;
+            case Quality.Epic:
+                color = "magenta";
+                break;
+            case Quality.Legendary:
+                color = "orange";
+                break;
+            case Quality.Artifact:
+                color = "red";
+                break;
+            default:
+                break;
+        }
+        string extraText = GetTooltipExtraText();
+
+        string text = string.Format("<color={0}>{1}</color>\n{5}购买价格:{2}\n卖出价格:{3}\n\n{4}",color,name,buyPrice,sellPrice,description,extraText);
+        return text;
+    }
+
+    // 用来获取额外的属性信息
+    public virtual string GetTooltipExtraText() {
+        return "";
     }
 
 

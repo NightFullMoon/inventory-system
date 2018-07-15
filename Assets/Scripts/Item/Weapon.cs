@@ -38,4 +38,22 @@ public class Weapon : Item
         this.damage = damage;
         this.weaponType = weaponType;
     }
+    public override string GetTooltipExtraText()
+    {
+        string wpTypeText = "";
+        switch (weaponType)
+        {
+            case WeaponType.OffHand:
+                wpTypeText = "副手武器";
+                break;
+            case WeaponType.MainHand:
+                wpTypeText = "主手武器";
+                break;
+            default:
+                break;
+        }
+
+        return string.Format("伤害：{0}\n部位：{1}\n", damage, wpTypeText);
+        //return base.GetTooltipExtraText();
+    }
 }
