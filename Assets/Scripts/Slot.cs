@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
     //已经存放的Item
@@ -16,6 +17,8 @@ public class Slot : MonoBehaviour
 
     public Text countText;
 
+    private Tooltip tooltip;
+
     //已经存放的数量
     public int count = 0;
 
@@ -24,6 +27,8 @@ public class Slot : MonoBehaviour
         // Debug.Log("slot Awake");
         // itemImage =  GetComponentInChildren<Image>();
         //countText = GetComponentInChildren<Text>();
+
+        tooltip = FindObjectOfType<Tooltip>();
     }
 
     //public Item storedItem() { return _storedItem; }
@@ -67,6 +72,20 @@ public class Slot : MonoBehaviour
         return true;
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (null == storedItem) {
+            return;
+        }
 
+        tooltip.Show(storedItem.GetTooltipText());
+        //throw new System.NotImplementedException();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        tooltip.Hide();
+      //  throw new System.NotImplementedException();
+    }
 
 }

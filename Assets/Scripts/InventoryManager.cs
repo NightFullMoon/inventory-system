@@ -4,15 +4,12 @@ using UnityEngine;
 
 using LitJson;
 
-public struct JsonDataFormat
-{
-    public List<Consumable> consumable;
-}
 
 
 public class InventoryManager : MonoBehaviour
 {
     public List<Item> itemList;
+
 
 
     // public List<Item> demo;
@@ -117,4 +114,6 @@ public class InventoryManager : MonoBehaviour
         return null;
 
     }
+
+
 }

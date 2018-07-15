@@ -92,6 +92,11 @@ public class Item
 
     }
 
+    // 获取显示在面板上的信息
+    public virtual string GetTooltipText() {
+        return name;
+    }
+
 
 
 }
