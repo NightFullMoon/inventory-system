@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IPointerDownHandler
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
 
     //已经存放的Item
@@ -43,7 +43,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IPo
             return true;
         }
 
-       // Debug.Log(" 想要存放物品");
+        // Debug.Log(" 想要存放物品");
         if (null != storedItem)
         {
             if (item.id != storedItem.id)
@@ -77,7 +77,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IPo
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (null == storedItem || null!= pickUpItem.storedItem) {
+        if (null == storedItem || null != pickUpItem.storedItem)
+        {
             return;
         }
 
@@ -88,86 +89,126 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IPo
     public void OnPointerExit(PointerEventData eventData)
     {
         tooltip.Hide();
-      //  throw new System.NotImplementedException();
+        //  throw new System.NotImplementedException();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("按下了鼠标");
+
+        /*
+         --|--  |--
+         鼠标\当前|null|!null
+         null| nothing|putDown
+         !null|pickUp|swap or add
+
+         */
+        //Debug.Log("按下了鼠标");
         // throw new System.NotImplementedException();
 
         if (null == storedItem)
         {
-            //todo:放下等逻辑
+            if (null != pickUpItem.storedItem)
+            {
+                PutDownItem(pickUpItem.storedItem, pickUpItem.count);
+            }
             return;
         }
-        //先实现捡起的逻辑
-        if (Input.GetKey(KeyCode.LeftControl)) {
-            //拾取一半
-            PickUpItem(0.5f);
-        }
-        else {
-            //拾取全部
+
+
+        if (null == pickUpItem.storedItem)
+        {
+            Debug.Log("捡起物品");
             PickUpItem();
+            return;
         }
 
+        //这个肯定是当前不为空
+        if (pickUpItem.storedItem.id == storedItem.id)
+        {
+            PutDownItem(pickUpItem.storedItem, pickUpItem.count);
+        }
+        else
+        {
+            SwapWithSlot(pickUpItem.targetSlot);
+        }
     }
 
     // 当前已经拾取的槽
-    public Slot pickUpItem;
+    public PickupSlot pickUpItem;
 
     //主要是有以下几种操作情况:
 
-    //捡起全部物品，将自身的物品递交给鼠标
-    void PickUpItem() {
-       PickUpItem(count);
+    //捡起物品，将自身的物品递交给鼠标，根据ctrl键的状态决定数量
+    void PickUpItem()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            //拾取一半
+            PickUpItem(0.5f);
+        }
+        else
+        {
+            //拾取全部
+            PickUpItem(count);
+        }
     }
-    //捡起部分物品，将自身的物品递交给鼠标
-    void PickUpItem(int count) {
-      
 
-        if (count < 1) {
+    //捡起部分物品，将自身的物品递交给鼠标
+    void PickUpItem(int count)
+    {
+        if (count < 1)
+        {
             return;
         }
         int _count = count;
-        if (this.count < count) {
+        if (this.count < count)
+        {
             _count = this.count;
         }
 
         //pickUpItem.storedItem = this.storedItem;
         //pickUpItem.count = _count;
-       bool isSuccess = pickUpItem.storeItem(storedItem, _count);
-        if (!isSuccess) {
+        bool isSuccess = pickUpItem.storeItem(storedItem, _count);
+        if (!isSuccess)
+        {
             return;
         }
         tooltip.Hide();
+        pickUpItem.gameObject.SetActive(true);
+
+        pickUpItem.targetSlot = this;
 
         int newCount = this.count - _count;
         if (0 == newCount)
         {
             storeItem(null);
+
         }
-        else {
+        else
+        {
             addCount(-_count);
         }
-       
-
     }
+
     //捡起部分物品，将自身的物品递交给鼠标，precent为0到1的数，如果不是正整数则向上取整，最少数量为1
-    void PickUpItem(float precent) {
-        if (1 < precent) {
+    void PickUpItem(float precent)
+    {
+        if (1 < precent)
+        {
             PickUpItem();
             return;
         }
 
-        if (precent < 0) {
+        if (precent < 0)
+        {
             PickUpItem(1);
             return;
         }
 
         int count = (int)((float)this.count * precent);
 
-        if (count < 1) {
+        if (count < 1)
+        {
             PickUpItem(1);
             return;
         }
@@ -176,18 +217,69 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IPo
     }
 
     //放下全部物品，将鼠标上的物品放置到Slot里面
-    void PutDownItem(Item item)
-    {
-
-    }
+    //void PutDownItem(Item item)
+    //{
+    //}
     //放下部分物品，将鼠标上的物品放置到Slot里面
-    void PutDownItem(Item item, int count) {
+    void PutDownItem(Item item, int allCount)
+    {
+        if (null == storedItem)
+        {
+            storeItem(item, allCount);
+            pickUpItem.storeItem(null);
+            pickUpItem.gameObject.SetActive(false);
+            return;
+        }
 
+        //相同就叠加
+        if (storedItem.id == item.id)
+        {
+
+
+            int addCount = allCount;
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                addCount = 1;
+            }
+            else if (storedItem.maxNum < allCount + this.count)
+            {
+                addCount = storedItem.maxNum - this.count;
+            }
+
+            this.addCount(addCount);
+            pickUpItem.addCount(-addCount);
+
+            if (addCount == allCount)
+            {
+                pickUpItem.storeItem(null);
+                pickUpItem.gameObject.SetActive(false);
+            }
+        }
     }
 
     //与对应插槽中的物品进行交换
-    void SwapWithSlot(Slot slot) {
+    void SwapWithSlot(Slot slot)
+    {
+        if (null != slot.storedItem)
+        {
+            return;
+        }
+        Debug.Log("交换物品");
+        Item tempItem = storedItem;
+        int tempCount = count;
 
+        // this.storedItem = pickUpItem.storedItem;
+        //this.count = pickUpItem.count;
+
+        storeItem(null);
+        storeItem(pickUpItem.storedItem, pickUpItem.count);
+
+        slot.storeItem(null);
+        slot.storeItem(tempItem, tempCount);
+
+        pickUpItem.storeItem(null);
+        pickUpItem.gameObject.SetActive(false);
     }
-       
+
 }

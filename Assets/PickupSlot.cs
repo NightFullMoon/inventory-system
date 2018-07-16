@@ -7,6 +7,8 @@ public class PickupSlot : Slot
 
     private Canvas canvas;
 
+    public Slot targetSlot;
+
     // Use this for initialization
     void Start()
     {
