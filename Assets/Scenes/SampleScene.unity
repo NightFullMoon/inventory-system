@@ -266,7 +266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &98646867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +360,7 @@ MonoBehaviour:
   countText: {fileID: 1019897890}
   count: 0
   pickUpItem: {fileID: 98646870}
+  targetSlot: {fileID: 0}
 --- !u!224 &139803248 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224270219178880642, guid: 11a66e8dd5532f34cb045750296d8600,
@@ -898,6 +899,7 @@ GameObject:
   - component: {fileID: 320723747}
   - component: {fileID: 320723746}
   - component: {fileID: 320723748}
+  - component: {fileID: 320723749}
   m_Layer: 5
   m_Name: KnapsackPanel
   m_TagString: Untagged
@@ -969,6 +971,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12650f6f5d573040a2f874684a75d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayKey: 98
+--- !u!225 &320723749
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 320723744}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &515892146
 GameObject:
   m_ObjectHideFlags: 0

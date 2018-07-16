@@ -13,11 +13,12 @@ public class Inventory : MonoBehaviour
         slots = GetComponentsInChildren<Slot>();
         //storeItem(3);
 
-        for (int i = 1; i< 19; ++i) {
+        for (int i = 1; i < 19; ++i)
+        {
             storeItem(i);
         }
-        storeItem(1,20);
-        storeItem(2,12);
+        storeItem(1, 20);
+        storeItem(2, 12);
     }
 
     // 存放入指定id的物品，如果存放失败，则返回false
@@ -37,7 +38,7 @@ public class Inventory : MonoBehaviour
 
     bool storeItem(Item item, int count = 1)
     {
-        if (null == item )
+        if (null == item)
         {
             return false;
         }
@@ -54,7 +55,8 @@ public class Inventory : MonoBehaviour
          }
          */
 
-        if (null == slot) {
+        if (null == slot)
+        {
             slot = findEmptySlot();
         }
 
@@ -101,5 +103,44 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
+    public KeyCode displayKey;
 
+    private CanvasGroup canvasGroup;
+
+    //切换显示隐藏面板
+    void toggleDisplay()
+    {
+        if (null == canvasGroup)
+        {
+            Debug.LogWarning("没有找到CanvasGroup组件，无法提供切换显示隐藏的功能");
+            return;
+        }
+
+        if (0 == canvasGroup.alpha)
+        {
+            canvasGroup.alpha = 1;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+        else
+        {
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
+    }
+
+    private void Awake()
+    {
+        canvasGroup = gameObject.GetComponent<CanvasGroup>();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(displayKey))
+        {
+            Debug.Log("切换显示隐藏");
+            toggleDisplay();
+        }
+    }
 }

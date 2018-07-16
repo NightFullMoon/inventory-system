@@ -42,10 +42,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
 
-    }
 
     // 解析item的json文件
     void parseItemJson()
@@ -151,6 +148,11 @@ public class InventoryManager : MonoBehaviour
         return null;
 
     }
+
+    //todo:箱子
+    //todo:箱子的显示和隐藏
+    //todo：角色面板
+    //todo：角色面板的显示和隐藏
 
 
 }
