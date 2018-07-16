@@ -221,7 +221,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     //{
     //}
     //放下部分物品，将鼠标上的物品放置到Slot里面
-    void PutDownItem(Item item, int allCount)
+    virtual protected void PutDownItem(Item item, int allCount)
     {
         if (null == storedItem)
         {
@@ -259,7 +259,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     }
 
     //与对应插槽中的物品进行交换
-    void SwapWithSlot(Slot slot)
+    virtual protected void SwapWithSlot(Slot slot)
     {
         if (null != slot.storedItem)
         {

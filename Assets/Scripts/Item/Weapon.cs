@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum WeaponType
 {
+    None,
     OffHand,
     MainHand
 }

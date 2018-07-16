@@ -13,16 +13,11 @@ public class Inventory : MonoBehaviour
         slots = GetComponentsInChildren<Slot>();
         //storeItem(3);
 
-        for (int i = 1; i < 19; ++i)
-        {
-            storeItem(i);
-        }
-        storeItem(1, 20);
-        storeItem(2, 12);
+
     }
 
     // 存放入指定id的物品，如果存放失败，则返回false
-    bool storeItem(int itemId, int count = 1)
+    protected bool storeItem(int itemId, int count = 1)
     {
         Item item = InventoryManager.Instance.getItemById(itemId);
 
@@ -36,7 +31,7 @@ public class Inventory : MonoBehaviour
         return storeItem(item, count);
     }
 
-    bool storeItem(Item item, int count = 1)
+    protected bool storeItem(Item item, int count = 1)
     {
         if (null == item)
         {

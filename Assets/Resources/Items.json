@@ -256,5 +256,20 @@
         "buyPrice": 100,
         "sellPrice": 20,
         "sprite": "Sprites/Items/gem"
+    },{
+        "id": 19,
+        "name": "靴子",
+        "itemType": "Equipment",
+        "quality": "Common",
+        "description": "长得很普通的靴子",
+        "maxNum": 1,
+        "buyPrice": 100,
+        "sellPrice": 20,
+        "sprite": "Sprites/Items/boots",
+        "strength": 1,
+        "intellect": 2,
+        "agility": 3,
+        "stamina": 4,
+        "equipmentType": "Boots"
     }
 ]
