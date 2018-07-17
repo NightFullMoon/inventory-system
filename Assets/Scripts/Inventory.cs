@@ -106,7 +106,7 @@ public class InventoryInstance : MonoBehaviour
     }
 
     //找到一个空的物品槽，如果没有找到，则返回null 
-    Slot findEmptySlot()
+    public Slot findEmptySlot()
     {
         foreach (Slot slot in slots)
         {

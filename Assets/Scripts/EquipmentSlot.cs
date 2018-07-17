@@ -16,11 +16,15 @@ public class EquipmentSlot : Slot
 
         if (null == item)
         {
-            return false;
+            return true;
         }
         Weapon targetItem = item as Weapon;
         Equipment targetEquipment = item as Equipment;
 
+        //这里其实隐含了几个条件：
+        //1.既不是武器也不是装备
+        //2.是武器但是与槽接受的类型不匹配
+        //3.是装备但是与槽接受的类型不匹配
         if ((null == targetItem || targetItem.weaponType != weaponType) &&
                  (null == targetEquipment || targetEquipment.equipmentType != equipmentType))
         {
@@ -65,5 +69,19 @@ public class EquipmentSlot : Slot
 
     // .Use的话，要么是swap，要么是putdown，不管是swap还是putdown，都需要原来槽的信息
 
+    protected override void OnRightClick()
+    {
+        //base.OnRightClick();
 
+        //这里是脱下装备
+
+        //this.
+       Slot slot =  Knapsack.Instance().findEmptySlot();
+
+        if (null == slot) {
+            return;
+        }
+        //slot.SwapWithSlotDirect(this);
+        SwapWithSlotDirect(slot);
+    }
 }

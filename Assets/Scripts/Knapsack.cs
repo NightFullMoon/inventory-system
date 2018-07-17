@@ -6,19 +6,29 @@ public class Knapsack : InventoryInstance
 {
     static Knapsack _instance;
 
-    public new static Knapsack Instance()
+    public static Knapsack Instance()
     {
-        if (null == _instance)
-        {
-            _instance = new Knapsack();
-        }
+        //if (null == _instance)
+        //{
+        //    _instance = new Knapsack();
+        //}
 
         return _instance;
     }
 
-     protected void Start()
+    override protected void Awake()
     {
-       //base.Awake();
+        base.Awake();
+        if (null == _instance)
+        {
+            _instance = this;
+        }
+
+    }
+
+    protected void Start()
+    {
+        //base.Awake();
         for (int i = 1; i < 20; ++i)
         {
             storeItem(i);

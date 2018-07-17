@@ -149,5 +149,4 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    //todo：右键穿戴装备
 }

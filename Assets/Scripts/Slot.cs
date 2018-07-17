@@ -22,24 +22,34 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
         set
         {
+            if (_storedItem == value)
+            {
+                return;
+            }
             _storedItem = value;
+            if (null == _storedItem)
+            {
+                count = 0;
+            }
+
             if (!tooltip || !tooltip.IsVisible())
             {
                 return;
             }
 
-            if (null == storedItem)
+            if (null == _storedItem)
             {
                 tooltip.Hide();
+
             }
             else
             {
-                tooltip.Show(storedItem.GetTooltipText());
+                tooltip.Show(_storedItem.GetTooltipText());
             }
 
             //return storedItem;
         }
-       
+
     }
 
     public GameObject itemObject;
@@ -51,7 +61,33 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private Tooltip tooltip;
 
     //已经存放的数量
-    public int count = 0;
+    public int _count = 0;
+
+    public int count
+    {
+        get
+        {
+            return _count;
+        }
+        set
+        {
+            if (_count == value)
+            {
+                return;
+            }
+
+            _count = value;
+            countText.text = _count.ToString();
+            if (0 == value)
+            {
+                storedItem = null;
+            }
+            else if (1 == value && null != storedItem && 1 == storedItem.maxNum)
+            {
+                countText.text = "";
+            }
+        }
+    }
 
     void Awake()
     {
@@ -89,11 +125,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         this.count = count;
 
         itemImage.sprite = Resources.Load<Sprite>(item.sprite);
-        countText.text = count.ToString();
+        //countText.text = count.ToString();
 
         itemObject.SetActive(true);
 
-        if (tooltip) {
+        if (tooltip)
+        {
             tooltip.Show(item.GetTooltipText());
         }
         //Debug.Log("存放了物品");
@@ -106,7 +143,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         Debug.Log("增加了数量");
         this.count += count;
 
-        countText.text = this.count.ToString();
+        //countText.text = this.count.ToString();
         return true;
     }
 
@@ -154,7 +191,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            storedItem.Use(this);
+            OnRightClick();
             return;
         }
 
@@ -346,7 +383,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         slot.storeItem(null);
         slot.storeItem(tempItem, tempCount);
 
-        //todo:swap之后，要去更新一下toolstip的状态
     }
 
+
+    //在槽上右键时候的操作
+    virtual protected void OnRightClick() {
+        storedItem.Use(this);
+    }
 }
