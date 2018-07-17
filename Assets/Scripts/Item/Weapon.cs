@@ -39,7 +39,7 @@ public class Weapon : Item
         this.damage = damage;
         this.weaponType = weaponType;
     }
-    public override string GetTooltipExtraText()
+    protected override string GetTooltipExtraText()
     {
         string wpTypeText = "";
         switch (weaponType)

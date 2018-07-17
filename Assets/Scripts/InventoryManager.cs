@@ -126,7 +126,7 @@ public class InventoryManager : MonoBehaviour
 
 
         }
-        Debug.Log(itemList.Count);
+       // Debug.Log(itemList.Count);
 
     }
 

@@ -303,6 +303,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CharacterPanel.cs" />
     <Compile Include="Assets\EquipmentSlot.cs" />
     <Compile Include="Assets\PickupSlot.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />

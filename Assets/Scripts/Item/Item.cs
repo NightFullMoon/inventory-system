@@ -135,13 +135,22 @@ public class Item
         }
         string extraText = GetTooltipExtraText();
 
-        string text = string.Format("<color={0}>{1}</color>\n{5}购买价格:{2}\n卖出价格:{3}\n\n{4}",color,name,buyPrice,sellPrice,description,extraText);
+        string text = string.Format("<color={0}>{1}</color>\n{5}购买价格:{2}\n卖出价格:{3}\n\n{4}", color, name, buyPrice, sellPrice, description, extraText);
         return text;
     }
 
     // 用来获取额外的属性信息
-    public virtual string GetTooltipExtraText() {
+    protected virtual string GetTooltipExtraText()
+    {
         return "";
+    }
+
+    //对该物品的使用
+    //inventory :当前物品所在的仓库类对象实例
+    // slot ： 当前物品所在的Slot对象实例
+    virtual public void Use( Slot slot)
+    {
+
     }
 
 

@@ -2,17 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
-{
 
-    private Slot[] slots;
+public class Inventory : MonoBehaviour {
+
+    static InventoryInstance _instance;
+
+    static public InventoryInstance Instance()
+    {
+        // static Inventory ins = new Inventory();
+        if (null == _instance)
+        {
+            _instance = new InventoryInstance();
+        }
+
+        return _instance;
+    }
+}
+
+/* 这里要说明的一点是，因为 InventoryInstance这个类（之前叫Inventory）承担了两个角色，
+ * 
+ * 基类和单例，所以导致了一些问题
+ * 这里就先将这两个职责分开，新的Inventory类充当 单例的角色，
+ * InventoryInstance类充当基类的角色，
+ * 而目前的问题是，Inventory没有达到原有的目的（仍然可以实例一个InventoryInstance对象）
+ * 而C#又没有友元的操作导致。。。反正目前是没想出办法解决这个问题
+ */
+
+
+public class InventoryInstance : MonoBehaviour
+{
+    //protected InventoryInstance() { }
+
+
+    protected Slot[] slots;//= Instance().slots;
 
     // Use this for initialization
-    virtual protected void Start()
+   virtual protected void Awake()
     {
         slots = GetComponentsInChildren<Slot>();
+        canvasGroup = gameObject.GetComponent<CanvasGroup>();
         //storeItem(3);
+       
 
+        if (null == slots)
+        {
+            slots = new Slot[0];
+            Debug.LogWarning("警告，没有找到Slot对象");
+        }
+
+        Debug.Log("slots 被初始化，数量：" + slots.Length);
 
     }
 
@@ -125,10 +163,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        canvasGroup = gameObject.GetComponent<CanvasGroup>();
-    }
+    //private void Awake()
+    //{
+      
+    //}
 
     void Update()
     {

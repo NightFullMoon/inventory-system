@@ -15,7 +15,7 @@ public class Tooltip : MonoBehaviour {
     private Canvas canvas;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         text = GetComponent<Text>();
         contentText = transform.Find("Content").GetComponent<Text>();
 
@@ -47,8 +47,10 @@ public class Tooltip : MonoBehaviour {
         contentText.text = text;
 
         canvasGroup.alpha = 1;
+    }
 
-
+    public bool IsVisible() {
+        return 1==canvasGroup.alpha;
     }
 
     public void Hide() {

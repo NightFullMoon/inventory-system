@@ -2,11 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knapsack : Inventory
+public class Knapsack : InventoryInstance
 {
-    override protected void Start()
+    static Knapsack _instance;
+
+    public new static Knapsack Instance()
     {
-        base.Start();
+        if (null == _instance)
+        {
+            _instance = new Knapsack();
+        }
+
+        return _instance;
+    }
+
+     protected void Start()
+    {
+       //base.Awake();
         for (int i = 1; i < 20; ++i)
         {
             storeItem(i);

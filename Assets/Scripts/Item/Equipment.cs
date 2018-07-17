@@ -69,7 +69,7 @@ public class Equipment : Item
     }
 
 
-    public override string GetTooltipExtraText()
+    protected override string GetTooltipExtraText()
     {
         string typeText = "";
         switch (equipmentType)
@@ -110,5 +110,11 @@ public class Equipment : Item
 
         return string.Format("部位：{0}\n力量：{1}\n智力：{2}\n敏捷：{3}\n体力：{4}\n", typeText, strength, intellect, agility, stamina);
         //return base.GetTooltipExtraText();
+    }
+
+    //直接装备
+    public override void Use(Slot slot)
+    {
+        bool isSuccess = CharacterPanel.Instance().Equip(this, slot);
     }
 }

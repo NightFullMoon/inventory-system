@@ -8,8 +8,39 @@ using UnityEngine.EventSystems;
 public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
 
+    protected Item _storedItem;
+
     //已经存放的Item
-    public Item storedItem = null;
+    public Item storedItem
+    {
+        get
+        {
+            //Debug.Log("aaa");
+            return _storedItem;
+            //return null;
+
+        }
+        set
+        {
+            _storedItem = value;
+            if (!tooltip || !tooltip.IsVisible())
+            {
+                return;
+            }
+
+            if (null == storedItem)
+            {
+                tooltip.Hide();
+            }
+            else
+            {
+                tooltip.Show(storedItem.GetTooltipText());
+            }
+
+            //return storedItem;
+        }
+       
+    }
 
     public GameObject itemObject;
 
@@ -61,6 +92,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         countText.text = count.ToString();
 
         itemObject.SetActive(true);
+
+        if (tooltip) {
+            tooltip.Show(item.GetTooltipText());
+        }
         //Debug.Log("存放了物品");
         return true;
 
@@ -95,6 +130,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public void OnPointerDown(PointerEventData eventData)
     {
 
+
+        //Debug.Log();
         /*
          --|--  |--
          鼠标\当前|null|!null
@@ -111,6 +148,13 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 PutDownItem(pickUpItem.storedItem, pickUpItem.count);
             }
+
+            return;
+        }
+
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            storedItem.Use(this);
             return;
         }
 
@@ -173,7 +217,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             return;
         }
-        tooltip.Hide();
+
         pickUpItem.gameObject.SetActive(true);
 
         pickUpItem.targetSlot = this;
@@ -182,7 +226,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (0 == newCount)
         {
             storeItem(null);
-
         }
         else
         {
@@ -221,7 +264,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     //{
     //}
     //放下部分物品，将鼠标上的物品放置到Slot里面
-    virtual protected void PutDownItem(Item item, int allCount)
+    virtual public void PutDownItem(Item item, int allCount)
     {
         if (null == storedItem)
         {
@@ -259,7 +302,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     }
 
     //与对应插槽中的物品进行交换
-    virtual protected void SwapWithSlot(Slot slot)
+    virtual public void SwapWithSlot(Slot slot)
     {
         if (null != slot.storedItem)
         {
@@ -280,6 +323,30 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         pickUpItem.storeItem(null);
         pickUpItem.gameObject.SetActive(false);
+    }
+
+
+    //直接交换当前槽与目标槽的物品（忽略鼠标上物品的状态）
+    // 目标槽允许为null
+    virtual public void SwapWithSlotDirect(Slot slot)
+    {
+        Item tempItem = storedItem;
+        int tempCount = count;
+
+        if (null == slot)
+        {
+            storeItem(null);
+        }
+        else
+        {
+            storeItem(null);
+            storeItem(slot.storedItem, slot.count);
+        }
+
+        slot.storeItem(null);
+        slot.storeItem(tempItem, tempCount);
+
+        //todo:swap之后，要去更新一下toolstip的状态
     }
 
 }
