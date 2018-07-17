@@ -57,4 +57,10 @@ public class Weapon : Item
         return string.Format("伤害：{0}\n部位：{1}\n", damage, wpTypeText);
         //return base.GetTooltipExtraText();
     }
+
+    public override void Use(Slot slot)
+    {
+        CharacterPanel.Instance().Equip(this, slot);
+      //  base.Use(slot);
+    }
 }

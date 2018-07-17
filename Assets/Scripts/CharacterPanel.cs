@@ -35,7 +35,7 @@ public class CharacterPanel : InventoryInstance
         _instance = this;
     }
 
-    //装备指定的槽
+    //穿戴指定的防具
     public bool Equip(Equipment equipment, Slot slot)
     {
         EquipmentSlot targetSlot = FindSolt(equipment.equipmentType);
@@ -59,6 +59,29 @@ public class CharacterPanel : InventoryInstance
         return true;
     }
 
+    //穿戴指定的武器
+    public bool Equip(Weapon weapon, Slot slot)
+    {
+        EquipmentSlot targetSlot = FindSolt(weapon.weaponType);
+
+        if (null == targetSlot)
+        {
+            Debug.LogWarning("未找到指定类型[" + weapon.weaponType + "]的装备插槽");
+            return false;
+        }
+
+        if (null == targetSlot.storedItem)
+        {
+            targetSlot.PutDownItem(weapon, 1);
+            slot.storeItem(null);
+        }
+        else
+        {
+            Debug.Log("交换");
+            targetSlot.SwapWithSlotDirect(slot);
+        }
+        return true;
+    }
 
     //找到指定装备类型的槽，如果当前没有该类型的槽，则返回null
     EquipmentSlot FindSolt(EquipmentType equipmentType)
@@ -90,5 +113,33 @@ public class CharacterPanel : InventoryInstance
         return null;
     }
 
+    //找到指定武器类型的槽，如果当前没有该类型的槽，则返回null
+    EquipmentSlot FindSolt(WeaponType weaponType)
+    {
+        if (null == base.slots)
+        {
+            Debug.LogWarning("警告，slots为空");
+            return null;
+        }
 
+        foreach (Slot slot in slots)
+        {
+
+            EquipmentSlot equiSlot = slot as EquipmentSlot;
+
+            if (null == equiSlot)
+            {
+                continue;
+            }
+
+            //Debug.Log(equiSlot.equipmentType);
+            if (equiSlot.weaponType == weaponType)
+            {
+                return equiSlot;
+            }
+
+        }
+
+        return null;
+    }
 }
