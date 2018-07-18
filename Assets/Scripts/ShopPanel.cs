@@ -9,5 +9,5 @@ public class ShopPanel : InventoryInstance {
         storeItem(2);
         storeItem(3);
     }
-    //override 
+
 }

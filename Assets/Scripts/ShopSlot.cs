@@ -9,11 +9,16 @@ public class ShopSlot : Slot
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Left && null != pickUpItem.storedItem)
         {
-            Debug.Log("点击了右键");            OnRightClick();
+            SellItem(pickUpItem);
+            pickUpItem.gameObject.SetActive(false);
         }
-
+        else if (eventData.button == PointerEventData.InputButton.Right && null == pickUpItem.storedItem)
+        {
+            Debug.Log("点击了右键");
+            OnRightClick();
+        }
 
     }
 
@@ -42,5 +47,31 @@ public class ShopSlot : Slot
         Debug.Log("购买成功");
     }
 
+    //override 
+    //public override void SwapWithSlot(Slot slot)
+    //{
+    //    //base.SwapWithSlot(slot);
+    //    SellItem(slot);
+    //}
 
+    //卖掉某样物品
+    void SellItem(Slot slot)
+    {
+        if (null == slot)
+        {
+            return;
+        }
+
+        Item item = slot.storedItem;
+        int count = slot.count;
+
+        if (null == item || 0 == count)
+        {
+            return;
+        }
+        slot.storeItem(null);
+
+        int price = item.sellPrice * count;
+        Player.Instance().Earn(price);
+    }
 }

@@ -151,4 +151,5 @@ public class InventoryManager : MonoBehaviour
 
 }
 
+// todo: 鼠标上有东西的时候不执行购买
 //todo：商店页面的逻辑
