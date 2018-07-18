@@ -314,6 +314,7 @@
     <Compile Include="Assets\Scripts\Item\Weapon.cs" />
     <Compile Include="Assets\Scripts\Knapsack.cs" />
     <Compile Include="Assets\Scripts\PickupSlot.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Slot.cs" />
     <Compile Include="Assets\Scripts\Tooltip.cs" />
   </ItemGroup>

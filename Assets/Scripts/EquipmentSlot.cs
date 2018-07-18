@@ -78,8 +78,6 @@ public class EquipmentSlot : Slot
     //}
 
 
-    //fixme:按下做Ctrl键放置时，无法放置单个
-
     //这个分歧点在于，直接交换是允许空槽的。而鼠标拖放是不允许的
     //override public void SwapWithSlotDirect(Slot slot)
     //{
