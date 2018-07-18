@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Inventory : MonoBehaviour {
+public class Inventory : MonoBehaviour
+{
 
     static InventoryInstance _instance;
 
@@ -37,12 +38,12 @@ public class InventoryInstance : MonoBehaviour
     protected Slot[] slots;//= Instance().slots;
 
     // Use this for initialization
-   virtual protected void Awake()
+    virtual protected void Awake()
     {
         slots = GetComponentsInChildren<Slot>();
         canvasGroup = gameObject.GetComponent<CanvasGroup>();
         //storeItem(3);
-       
+
 
         if (null == slots)
         {
@@ -61,7 +62,6 @@ public class InventoryInstance : MonoBehaviour
 
         if (null == item)
         {
-
             Debug.LogWarning("试图放入不存在的物品：【id：" + itemId + "】");
             return false;
         }
@@ -69,39 +69,14 @@ public class InventoryInstance : MonoBehaviour
         return storeItem(item, count);
     }
 
-    protected bool storeItem(Item item, int count = 1)
+    public bool storeItem(Item item, int count = 1)
     {
-        if (null == item)
+        Slot slot = findSlotCouldStoreItem(item, count);
+        if (null == slot)
         {
             return false;
         }
-
-        Slot slot = findSlotWithItem(item);
-
-        /* if (null != slot) {
-             slot.storeItem(item, count);
-             //if ((1 == item.maxNum && 1 == count) || slot.count + count <= item.maxNum)
-             //{
-             //    slot.count += count;
-             //    return true;
-             //}
-         }
-         */
-
-        if (null == slot)
-        {
-            slot = findEmptySlot();
-        }
-
-        if (null == slot)
-        {
-            //所有的槽都已经满了
-            Debug.Log("所有的槽都已经满了");
-            return false;
-        }
-        slot.storeItem(item, count);
-        return true;
-
+        return slot.storeItem(item, count);
 
     }
 
@@ -165,7 +140,7 @@ public class InventoryInstance : MonoBehaviour
 
     //private void Awake()
     //{
-      
+
     //}
 
     void Update()
@@ -176,4 +151,42 @@ public class InventoryInstance : MonoBehaviour
             toggleDisplay();
         }
     }
+
+    //用来检查是否有能够存放对应物品的slot
+    public bool couldStoreItem(Item item, int count = 1)
+    {
+        return null != findSlotCouldStoreItem(item, count);
+    }
+
+    //用来查找一个能够存放对应item的slot，如果没有找到，则返回null
+    protected Slot findSlotCouldStoreItem(Item item, int count = 1)
+    {
+        //targetSlot = null;
+        if (null == item)
+        {
+            return null;
+        }
+
+        Slot slot = findSlotWithItem(item);
+
+        if (null == slot || slot.storedItem.maxNum < slot.count + count)
+        {
+            slot = findEmptySlot();
+        }
+
+        if (!slot.isItemTypeCorrect(item))
+        {
+            return null;
+        }
+
+        if (null == slot)
+        {
+            //所有的槽都已经满了
+            return null;
+        }
+
+        //targetSlot = slot;
+        return slot;
+    }
+
 }

@@ -32,7 +32,7 @@
         "quality": "Common",
         "description": "长得很普通的胸甲",
         "maxNum": 1,
-        "buyPrice": 100,
+        "buyPrice": 400,
         "sellPrice": 20,
         "sprite": "Sprites/Items/armor",
         "strength": 1,

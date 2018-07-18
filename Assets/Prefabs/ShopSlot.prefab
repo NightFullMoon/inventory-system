@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 222166702890315762}
   - component: {fileID: 114284183500326490}
   - component: {fileID: 114712340447251810}
-  - component: {fileID: 114466960608422066}
   - component: {fileID: 114479276396826526}
   m_Layer: 5
   m_Name: ShopSlot
@@ -119,22 +118,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114466960608422066
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1958416608888804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 640d864ff6bcf1a4b8b8a32bcfcb190a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemObject: {fileID: 1373357812026140}
-  itemImage: {fileID: 114346624880971070}
-  countText: {fileID: 114603942732775570}
-  _count: 0
-  pickUpItem: {fileID: 0}
 --- !u!114 &114479276396826526
 MonoBehaviour:
   m_ObjectHideFlags: 1

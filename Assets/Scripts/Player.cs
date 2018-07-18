@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
                 _money = value;
             }
 
-            if (moneyText) {
+            if (moneyText)
+            {
                 moneyText.text = money.ToString();
             }
 
@@ -40,8 +41,15 @@ public class Player : MonoBehaviour
 
     public Text moneyText;
 
+    static public Player _instance;
+
+    static public Player Instance()
+    {
+        return _instance;
+    }
+
     //给角色添加钱
-    void Earn(int value)
+    public void Earn(int value)
     {
 
         if (value < 0)
@@ -53,7 +61,7 @@ public class Player : MonoBehaviour
     }
 
     //角色花钱
-    bool Cost(int value)
+    public bool Cost(int value)
     {
         if (money < value)
         {
@@ -68,5 +76,9 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         money = 998;
+        if (null == _instance)
+        {
+            _instance = this;
+        }
     }
 }
