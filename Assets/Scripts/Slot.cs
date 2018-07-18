@@ -345,6 +345,15 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             return;
         }
+        //交换的顺序是这样的：鼠标->this;
+        // this -> slot
+        // null -> 鼠标
+
+        //交换之前先去校验是否双方都能接受对方的物品类型
+        if (!isItemTypeCorrect(pickUpItem.storedItem) || !slot.isItemTypeCorrect(this.storedItem)) {
+            return;
+        }
+
         Debug.Log("交换物品");
         Item tempItem = storedItem;
         int tempCount = count;
@@ -389,5 +398,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     //在槽上右键时候的操作
     virtual protected void OnRightClick() {
         storedItem.Use(this);
+    }
+
+    // 返回item的类型是否可以被接受
+    virtual public bool isItemTypeCorrect(Item item) {
+        return true;
     }
 }
