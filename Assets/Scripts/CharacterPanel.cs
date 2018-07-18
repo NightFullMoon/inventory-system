@@ -32,7 +32,10 @@ public class CharacterPanel : InventoryInstance
         //Debug.Log("slots 在子类被，数量：" + slots.Length);
         //Debug.Log(slots == null);
         //Debug.Log(base.slots == null);
-        _instance = this;
+        if (null == _instance) {
+            _instance = this;
+        }
+        
     }
 
     //穿戴指定的防具

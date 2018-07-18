@@ -151,6 +151,4 @@ public class InventoryManager : MonoBehaviour
 
 }
 
-
-//todo：商店页面的UI
 //todo：商店页面的逻辑
