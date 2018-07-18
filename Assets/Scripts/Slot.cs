@@ -37,10 +37,9 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 return;
             }
 
-            if (null == _storedItem)
+            if (null == _storedItem || null != pickUpItem.storedItem)
             {
                 tooltip.Hide();
-
             }
             else
             {
@@ -129,10 +128,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         itemObject.SetActive(true);
 
-        if (tooltip)
-        {
-            tooltip.Show(item.GetTooltipText());
-        }
+        //if (tooltip)
+        //{
+        //    tooltip.Show(item.GetTooltipText());
+        //}
         //Debug.Log("存放了物品");
         return true;
 
@@ -241,6 +240,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             return;
         }
+
         int _count = count;
         if (this.count < count)
         {
@@ -268,6 +268,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             addCount(-_count);
         }
+        tooltip.Hide();
     }
 
     //捡起部分物品，将自身的物品递交给鼠标，precent为0到1的数，如果不是正整数则向上取整，最少数量为1
@@ -303,11 +304,31 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     //放下部分物品，将鼠标上的物品放置到Slot里面
     virtual public void PutDownItem(Item item, int allCount)
     {
+        if (!isItemTypeCorrect(item))
+        {
+            return;
+        }
+
+        int addCount = allCount;
+
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            addCount = 1;
+        }
+
         if (null == storedItem)
         {
-            storeItem(item, allCount);
-            pickUpItem.storeItem(null);
-            pickUpItem.gameObject.SetActive(false);
+          
+            pickUpItem.count -= addCount;
+
+            if (0 == pickUpItem.count)
+            {
+                pickUpItem.storeItem(null);
+                pickUpItem.gameObject.SetActive(false);
+            }
+
+            storeItem(item, addCount);
+
             return;
         }
 
@@ -315,14 +336,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (storedItem.id == item.id)
         {
 
-
-            int addCount = allCount;
-
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                addCount = 1;
-            }
-            else if (storedItem.maxNum < allCount + this.count)
+            if (storedItem.maxNum < addCount + this.count)
             {
                 addCount = storedItem.maxNum - this.count;
             }
@@ -350,7 +364,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // null -> 鼠标
 
         //交换之前先去校验是否双方都能接受对方的物品类型
-        if (!isItemTypeCorrect(pickUpItem.storedItem) || !slot.isItemTypeCorrect(this.storedItem)) {
+        if (!isItemTypeCorrect(pickUpItem.storedItem) || !slot.isItemTypeCorrect(this.storedItem))
+        {
             return;
         }
 
@@ -376,6 +391,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // 目标槽允许为null
     virtual public void SwapWithSlotDirect(Slot slot)
     {
+        //交换之前先去校验是否双方都能接受对方的物品类型
+        if (!isItemTypeCorrect(slot.storedItem) || !slot.isItemTypeCorrect(this.storedItem))
+        {
+            return;
+        }
+
         Item tempItem = storedItem;
         int tempCount = count;
 
@@ -396,12 +417,14 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
 
     //在槽上右键时候的操作
-    virtual protected void OnRightClick() {
+    virtual protected void OnRightClick()
+    {
         storedItem.Use(this);
     }
 
     // 返回item的类型是否可以被接受
-    virtual public bool isItemTypeCorrect(Item item) {
+    virtual public bool isItemTypeCorrect(Item item)
+    {
         return true;
     }
 }
