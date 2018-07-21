@@ -34,7 +34,6 @@ public class InventoryInstance : MonoBehaviour
 {
     //protected InventoryInstance() { }
 
-
     protected Slot[] slots;//= Instance().slots;
 
     // Use this for initialization
@@ -174,12 +173,8 @@ public class InventoryInstance : MonoBehaviour
             slot = findEmptySlot();
         }
 
-        if (!slot.isItemTypeCorrect(item))
-        {
-            return null;
-        }
-
-        if (null == slot)
+        // 找不到空槽了，或者的找到的空槽无法放置目标物品
+        if (null == slot || !slot.isItemTypeCorrect(item))
         {
             //所有的槽都已经满了
             return null;

@@ -34,6 +34,6 @@ public class Knapsack : InventoryInstance
             storeItem(i);
         }
         storeItem(1, 20);
-        storeItem(2, 12);
+        storeItem(2, 5);
     }
 }

@@ -305,6 +305,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CharacterPanel.cs" />
     <Compile Include="Assets\Scripts\EquipmentSlot.cs" />
+    <Compile Include="Assets\Scripts\ForgePanel.cs" />
+    <Compile Include="Assets\Scripts\Formula.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Item\Consumable.cs" />

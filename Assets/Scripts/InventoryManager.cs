@@ -6,15 +6,9 @@ using LitJson;
 
 
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager
 {
     public List<Item> itemList;
-
-
-
-    // public List<Item> demo;
-
-    //public List<int> aaa;
 
     #region 单例模式
     private static InventoryManager _instance;
@@ -25,20 +19,24 @@ public class InventoryManager : MonoBehaviour
         {
             if (null == _instance)
             {
-                //_instance = this;
-                _instance = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+                _instance = new InventoryManager();
+                _instance.init();
             }
+            //init();
             return _instance;
         }
     }
     #endregion
 
     // Use this for initialization
-    void Awake()
+    //void Awake()
+    //{
+    //    init();
+    //}
+
+    private void init()
     {
         parseItemJson();
-
-
     }
 
     // Update is called once per frame
@@ -126,7 +124,7 @@ public class InventoryManager : MonoBehaviour
 
 
         }
-       // Debug.Log(itemList.Count);
+        // Debug.Log(itemList.Count);
 
     }
 
@@ -135,7 +133,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (null == itemList)
         {
-            Debug.Log("itemList 为 null");
+            Debug.LogWarning("试图通过id获取对应物品，但物品列表尚未初始化");
             return null;
         }
         foreach (Item item in itemList)
@@ -149,7 +147,10 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    /*需要完善的地方：
+     * 槽的逻辑比较混乱
+     * 售卖的时候，没有走原先的流程，而是直接新起了一个流程，导致左Ctrl卖出1个的逻辑失效
+     */
 }
 
-// todo: 鼠标上有东西的时候不执行购买
-//todo：商店页面的逻辑
+
