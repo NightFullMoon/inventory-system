@@ -36,7 +36,7 @@ public class Formula
                     continue;
                 }
 
-                int a = 0;
+                //int a = 0;
 
                 //if (itemInfo.item.id == matchItemInfo.item.id) {
 

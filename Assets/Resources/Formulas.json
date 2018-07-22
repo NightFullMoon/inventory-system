@@ -1,0 +1,18 @@
+[
+    {
+        "source": [
+            {
+                "id": 1,
+                "count": 1
+            },
+            {
+                "id": 2,
+                "count": 1
+            }
+        ],
+        "compound": {
+            "id": 16,
+            "count": 1
+        }
+    }
+]

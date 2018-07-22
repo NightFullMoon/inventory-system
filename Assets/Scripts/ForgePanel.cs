@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using LitJson;
 
 //用来存放Item的信息
 
@@ -31,16 +32,18 @@ public class ForgePanel : InventoryInstance
     protected override void Awake()
     {
         base.Awake();
-        //todo:这里要去解析JSON文件，以获取真正的物品信息
+        //解析JSON文件，以获取能够合成的列表
         if (null == formulaList)
         {
-            formulaList = new List<Formula>();
+            ParseFormulaList();
 
-            List<ItemInfo> tempItemInfoList = new List<ItemInfo>();
-            tempItemInfoList.Add(new ItemInfo(1));
-            tempItemInfoList.Add(new ItemInfo(2));
+            //formulaList = new List<Formula>();
 
-            formulaList.Add(new Formula(new ItemInfo(16), tempItemInfoList));
+            //List<ItemInfo> tempItemInfoList = new List<ItemInfo>();
+            //tempItemInfoList.Add(new ItemInfo(1));
+            //tempItemInfoList.Add(new ItemInfo(2));
+
+            //formulaList.Add(new Formula(new ItemInfo(16), tempItemInfoList));
 
         }
     }
@@ -95,24 +98,28 @@ public class ForgePanel : InventoryInstance
             ItemInfo result = formula.compound;
 
             //先检查是否能够存放目标物品
-            bool couldStore =  Knapsack.Instance().couldStoreItem(result.item, result.count);
+            bool couldStore = Knapsack.Instance().couldStoreItem(result.item, result.count);
 
-            if (!couldStore) {
+            if (!couldStore)
+            {
                 return;
             }
 
             //把每个槽里面，消耗掉的物品都减去对应的数量
             foreach (Slot slot in slots)
             {
-                if (null == slot.storedItem) {
+                if (null == slot.storedItem)
+                {
                     continue;
                 }
-               
+
                 foreach (ItemInfo itemInfo in formula.itemInfoList)
                 {
-                    if (itemInfo.item.id == slot.storedItem.id) {
+                    if (itemInfo.item.id == slot.storedItem.id)
+                    {
                         slot.addCount(-itemInfo.count);
-                        if (0 == slot.count) {
+                        if (0 == slot.count)
+                        {
                             slot.itemObject.SetActive(false);
                         }
                         break;
@@ -125,5 +132,46 @@ public class ForgePanel : InventoryInstance
             return;
         }
         Debug.LogWarning("匹配到配方却无法合成，可能是判定函数不正确");
+    }
+
+    //解析JSON文件，取得配方列表
+    void ParseFormulaList()
+    {
+        const string fileName = "Formulas";
+
+        formulaList = new List<Formula>();
+
+        TextAsset formulaListText = Resources.Load<TextAsset>(fileName);
+
+        if (null == formulaListText)
+        {
+            Debug.LogWarning("初始化时可合成列表时，未找到配置文件【" + fileName + ".json】");
+            return;
+        }
+
+        JsonData jsonObjects = JsonMapper.ToObject(formulaListText.text);
+
+        for (int i = 0, count = jsonObjects.Count; i < count; ++i)
+        {
+            JsonData item = jsonObjects[i];
+
+
+            if (null == item["source"] || null == item["compound"])
+            {
+                Debug.LogWarning("存在未解析到合成材料或合成物的配方");
+                continue;
+            }
+            List<ItemInfo> sourceList = new List<ItemInfo>();
+
+            for (int j = 0, sourceCount = item["source"].Count; j < sourceCount; ++j)
+            {
+                sourceList.Add(new ItemInfo((int)item["source"][j]["id"], (int)item["source"][j]["count"]));
+            }
+
+            formulaList.Add(new Formula(new ItemInfo((int)item["compound"]["id"], (int)item["compound"]["count"]), sourceList));
+
+        }
+
+
     }
 }
